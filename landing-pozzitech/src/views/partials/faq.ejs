@@ -1,0 +1,42 @@
+<section id="faq" class="py-24 lg:py-32 bg-surface">
+  <div class="max-w-container mx-auto px-6">
+
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-16 reveal">
+        <div class="section-tag">FAQ</div>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-primary leading-tight tracking-tight mb-4">
+          Perguntas frequentes
+        </h2>
+        <p class="text-lg text-gray-500">Tudo que você precisa saber antes de agendar.</p>
+      </div>
+
+      <div class="space-y-3">
+        <% faqs.forEach((faq, i) => { %>
+        <div class="faq-item border border-gray-200 rounded-card overflow-hidden reveal" style="transition-delay: <%= i * 80 %>ms">
+          <button class="faq-btn w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 transition-colors"
+                  aria-expanded="false" aria-controls="faq-<%= i %>">
+            <span class="font-semibold text-primary text-sm sm:text-base pr-4"><%= faq.q %></span>
+            <svg class="faq-icon w-5 h-5 text-gray-400 flex-shrink-0 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div id="faq-<%= i %>" class="faq-answer hidden px-6 pb-6">
+            <p class="text-gray-500 text-sm leading-relaxed"><%= faq.a %></p>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+
+      <div class="mt-10 text-center reveal">
+        <p class="text-gray-500 text-sm">Ainda tem dúvidas?
+          <a href="https://wa.me/<%= whatsapp.number %>?text=<%= encodeURIComponent(whatsapp.message) %>"
+             target="_blank" rel="noopener"
+             class="text-accent font-semibold hover:text-accent-hover transition-colors">
+            Fale conosco pelo WhatsApp →
+          </a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
