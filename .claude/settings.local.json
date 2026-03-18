@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"D:/workspace/IA_lp_pozzitech/landing-pozzitech/src/routes\" && mkdir -p \"D:/workspace/IA_lp_pozzitech/landing-pozzitech/src/controllers\" && mkdir -p \"D:/workspace/IA_lp_pozzitech/landing-pozzitech/src/views/partials\" && mkdir -p \"D:/workspace/IA_lp_pozzitech/landing-pozzitech/src/public/css\" && mkdir -p \"D:/workspace/IA_lp_pozzitech/landing-pozzitech/src/public/js\" && echo \"Dirs criados\")"
+    ]
+  }
+}
