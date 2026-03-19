@@ -2,7 +2,7 @@ const homeController = {
   index(req, res) {
     res.render('index', {
       meta: {
-        title: 'PozziTech | Automação com IA para Empresas — Diagnóstico Estratégico',
+        title: 'PozziTech | Automação com IA para Empresas — Diagnóstico Gratuito',
         description: 'Transforme processos manuais em máquinas de eficiência com IA. Consultoria especializada em automação, atendimento com IA e CRM. Agende sua demonstração gratuita.',
         url: 'https://pozzitech.com.br',
         image: 'https://pozzitech.com.br/og-image.jpg',
@@ -10,38 +10,16 @@ const homeController = {
       },
       whatsapp: {
         number: '5511989050585',
-        message: 'Olá! Gostaria de agendar uma demonstração gratuita de Automação com IA.',
+        message: 'Olá! Gostaria de agendar um diagnóstico gratuito de Automação com IA.',
       },
       calendly: {
-        url: 'https://calendly.com/pozzitech/diagnostico',
+        url: 'https://calendly.com/felipepozzi/30min',
       },
-      testimonials: [
-        {
-          name: 'Rafael Souza',
-          company: 'Diretor Comercial — LogiMax Transportes',
-          avatar: 'RS',
-          text: 'Reduzimos 60% do tempo no atendimento ao cliente com o chatbot da PozziTech. Em 3 meses, nosso time foca só em vendas complexas.',
-          rating: 5,
-        },
-        {
-          name: 'Camila Ferreira',
-          company: 'CEO — Clínica VitaSaúde',
-          avatar: 'CF',
-          text: 'A automação do agendamento eliminou 90% das ligações manuais. A satisfação dos pacientes subiu e a equipe ficou livre para atendimentos de qualidade.',
-          rating: 5,
-        },
-        {
-          name: 'Marcos Albuquerque',
-          company: 'Sócio — Construtora Albuquerque & Filhos',
-          avatar: 'MA',
-          text: 'O diagnóstico valeu cada centavo. Identificamos 4 processos críticos que estavam travando nosso crescimento. A implementação demorou 6 semanas.',
-          rating: 5,
-        },
-      ],
+      testimonials: [],
       faqs: [
         {
-          q: 'O que está incluído no Diagnóstico Estratégico?',
-          a: 'Uma sessão de 45 minutos onde mapeamos seus processos operacionais, identificamos os gargalos e entregamos um plano de automação priorizado com ROI estimado para cada iniciativa.',
+          q: 'O que está incluído no Diagnóstico Gratuito?',
+          a: 'Uma sessão de 30 minutos onde mapeamos seus processos operacionais, identificamos os gargalos e apresentamos as principais oportunidades de automação com IA para o seu negócio.',
         },
         {
           q: 'Preciso ter conhecimento técnico para participar?',
@@ -61,7 +39,7 @@ const homeController = {
         },
         {
           q: 'O Diagnóstico tem alguma garantia?',
-          a: 'Sim. Se ao final da sessão você sentir que não recebeu valor equivalente ao investimento, devolvemos 100% do valor sem questionamentos.',
+          a: 'Sim. O diagnóstico é 100% gratuito e sem compromisso. Se ao final da sessão você sentir que não recebeu nenhum insight útil para o seu negócio, não pedimos nada em troca — nem uma segunda conversa.',
         },
       ],
     });
