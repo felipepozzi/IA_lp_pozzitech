@@ -4,7 +4,9 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    @supports (scroll-behavior: smooth) {
+      scroll-behavior: smooth;
+    }
   }
   body {
     @apply font-sans antialiased;
