@@ -25,6 +25,12 @@
       const isOpen = !mobileMenu.classList.contains('hidden');
       mobileMenu.classList.toggle('hidden', isOpen);
       menuBtn.setAttribute('aria-expanded', String(!isOpen));
+      // Garante background visível quando menu está aberto
+      if (!isOpen && header) {
+        header.classList.add('scrolled');
+      } else if (isOpen && header && window.scrollY <= 40) {
+        header.classList.remove('scrolled');
+      }
     });
 
     // Close on link click
@@ -32,6 +38,9 @@
       link.addEventListener('click', () => {
         mobileMenu.classList.add('hidden');
         menuBtn.setAttribute('aria-expanded', 'false');
+        if (header && window.scrollY <= 40) {
+          header.classList.remove('scrolled');
+        }
       });
     });
   }

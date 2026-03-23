@@ -9,7 +9,7 @@ const homeController = {
         keywords: 'automação com IA, consultoria automação, chatbot, CRM automatizado, diagnóstico estratégico, redução de custos, inteligência artificial empresas',
       },
       whatsapp: {
-        number: '5511989050585',
+        number: '5511989040585',
         message: 'Olá! Gostaria de agendar um diagnóstico gratuito de Automação com IA.',
       },
       calendly: {
