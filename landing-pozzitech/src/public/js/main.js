@@ -161,4 +161,45 @@
     });
   }
 
+  /* --- Cookie consent banner --- */
+  (function () {
+    var COOKIE_KEY = 'pt_cookie_consent';
+    var banner = document.getElementById('cookie-banner');
+    var btnAccept = document.getElementById('cookie-accept');
+    var btnReject = document.getElementById('cookie-reject');
+
+    if (!banner) return;
+
+    function getConsent() {
+      try { return localStorage.getItem(COOKIE_KEY); } catch (e) { return null; }
+    }
+
+    function setConsent(val) {
+      try { localStorage.setItem(COOKIE_KEY, val); } catch (e) {}
+    }
+
+    function hideBanner() {
+      banner.style.display = 'none';
+    }
+
+    // Show banner if no decision stored yet
+    if (!getConsent()) {
+      banner.style.display = 'block';
+    }
+
+    if (btnAccept) {
+      btnAccept.addEventListener('click', function () {
+        setConsent('accepted');
+        hideBanner();
+      });
+    }
+
+    if (btnReject) {
+      btnReject.addEventListener('click', function () {
+        setConsent('rejected');
+        hideBanner();
+      });
+    }
+  })();
+
 })();
