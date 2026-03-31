@@ -161,6 +161,280 @@
     });
   }
 
+  /* --- Chat Widget --- */
+  (function () {
+    var chatToggle    = document.getElementById('chat-toggle');
+    var chatWindow    = document.getElementById('chat-window');
+    var chatCloseBtn  = document.getElementById('chat-close-btn');
+    var chatInput     = document.getElementById('chat-input');
+    var chatSend      = document.getElementById('chat-send');
+    var chatInputArea = document.getElementById('chat-input-area');
+    var chatMessages  = document.getElementById('chat-messages');
+    var chatChips     = document.getElementById('chat-chips');
+    var chatIconOpen  = document.getElementById('chat-icon-open');
+    var chatIconClose = document.getElementById('chat-icon-close');
+    var chatPulse     = document.getElementById('chat-pulse');
+
+    if (!chatToggle || !chatWindow) return;
+
+    var isOpen       = false;
+    var isLoading    = false;
+    var initialized  = false;
+
+    // sessionId persiste durante a aba (sessionStorage)
+    var sessionId = '';
+    try {
+      sessionId = sessionStorage.getItem('pt_chat_sid') || '';
+    } catch (e) {}
+    if (!sessionId) {
+      sessionId = 'w' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
+      try { sessionStorage.setItem('pt_chat_sid', sessionId); } catch (e) {}
+    }
+
+    // ── Helpers de UI ───────────────────────────────────────
+
+    function scrollToBottom() {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    var BOT_AVATAR = '<div class="w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center mt-0.5" style="background:rgba(79,70,229,0.4);"><svg class="w-3 h-3 fill-white" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>';
+
+    function appendBot(text) {
+      var div = document.createElement('div');
+      div.className = 'flex items-start gap-2';
+      var safe = escapeHtml(text).replace(/\n/g, '<br>');
+      div.innerHTML = BOT_AVATAR +
+        '<div class="rounded-2xl rounded-tl-none px-4 py-2.5 text-sm text-white/90 leading-relaxed" style="background:rgba(255,255,255,0.08);max-width:240px;">' + safe + '</div>';
+      chatMessages.appendChild(div);
+      scrollToBottom();
+    }
+
+    function appendUser(text) {
+      var div = document.createElement('div');
+      div.className = 'flex justify-end';
+      div.innerHTML = '<div class="rounded-2xl rounded-tr-none px-4 py-2.5 text-sm text-white" style="background:linear-gradient(135deg,#4F46E5,#7C3AED);max-width:240px;">' + escapeHtml(text) + '</div>';
+      chatMessages.appendChild(div);
+      scrollToBottom();
+    }
+
+    function showTyping() {
+      var div = document.createElement('div');
+      div.id = 'chat-typing';
+      div.className = 'flex items-start gap-2';
+      div.innerHTML = BOT_AVATAR +
+        '<div class="rounded-2xl rounded-tl-none px-4 py-3" style="background:rgba(255,255,255,0.08);">' +
+        '<div class="flex gap-1 items-center">' +
+        '<span class="w-2 h-2 rounded-full bg-white/50 animate-bounce" style="animation-delay:0ms"></span>' +
+        '<span class="w-2 h-2 rounded-full bg-white/50 animate-bounce" style="animation-delay:150ms"></span>' +
+        '<span class="w-2 h-2 rounded-full bg-white/50 animate-bounce" style="animation-delay:300ms"></span>' +
+        '</div></div>';
+      chatMessages.appendChild(div);
+      scrollToBottom();
+    }
+
+    function hideTyping() {
+      var el = document.getElementById('chat-typing');
+      if (el) el.remove();
+    }
+
+    function setInputMode(disabled) {
+      chatInput.disabled = disabled;
+      chatSend.disabled = disabled;
+      chatInput.placeholder = disabled ? 'Selecione uma opção acima...' : 'Digite sua mensagem...';
+      chatInput.style.opacity = disabled ? '0.5' : '1';
+    }
+
+    // ── Chips ───────────────────────────────────────────────
+
+    function renderChips(chips) {
+      chatChips.innerHTML = '';
+      if (!chips || !chips.length) {
+        chatChips.classList.add('hidden');
+        chatChips.classList.remove('flex');
+        return;
+      }
+      chatChips.classList.remove('hidden');
+      chatChips.classList.add('flex');
+
+      chips.forEach(function (chip) {
+        var btn = document.createElement('button');
+        btn.className = 'px-4 py-2 rounded-full text-sm text-white/80 border border-white/20 ' +
+          'hover:border-white/50 hover:text-white hover:bg-white/10 transition-all duration-150 ' +
+          'mt-2 leading-snug';
+        btn.textContent = chip.label;
+        btn.addEventListener('click', function () {
+          if (isLoading) return;
+          onChipClick(chip.label, chip.value || chip.label);
+        });
+        chatChips.appendChild(btn);
+      });
+      scrollToBottom();
+    }
+
+    function clearChips() {
+      chatChips.innerHTML = '';
+      chatChips.classList.add('hidden');
+      chatChips.classList.remove('flex');
+    }
+
+    function onChipClick(label, value) {
+      clearChips();
+      setInputMode(false);
+      appendUser(label);
+      callAPI({ selectedChip: value });
+    }
+
+    // ── Abertura / fechamento ────────────────────────────────
+
+    function openChat() {
+      isOpen = true;
+      chatWindow.classList.remove('hidden');
+      chatWindow.style.display = 'flex';
+      chatIconOpen.classList.add('hidden');
+      chatIconClose.classList.remove('hidden');
+      if (chatPulse) chatPulse.style.display = 'none';
+      scrollToBottom();
+
+      if (!initialized) {
+        initialized = true;
+        initChat();
+      } else {
+        if (!chatInput.disabled) chatInput.focus();
+      }
+    }
+
+    function closeChat() {
+      isOpen = false;
+      chatWindow.style.display = 'none';
+      chatIconOpen.classList.remove('hidden');
+      chatIconClose.classList.add('hidden');
+    }
+
+    chatToggle.addEventListener('click', function () { isOpen ? closeChat() : openChat(); });
+    if (chatCloseBtn) chatCloseBtn.addEventListener('click', closeChat);
+
+    // ── Inicialização (1ª abertura) ──────────────────────────
+
+    function initChat() {
+      setInputMode(true);
+      showTyping();
+
+      fetch('/api/chat/init?sessionId=' + encodeURIComponent(sessionId))
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          hideTyping();
+
+          if (data.greeting) {
+            appendBot(data.greeting);
+          }
+
+          if (data.message) {
+            showTyping();
+            setTimeout(function () {
+              hideTyping();
+              appendBot(data.message);
+              renderChips(data.chips);
+              setInputMode(!!data.inputDisabled);
+              if (!data.inputDisabled) chatInput.focus();
+            }, 700);
+          } else {
+            setInputMode(false);
+            chatInput.focus();
+          }
+        })
+        .catch(function () {
+          hideTyping();
+          appendBot('Olá! 👋 Como posso te ajudar?');
+          setInputMode(false);
+          chatInput.focus();
+        });
+    }
+
+    // ── Chamada à API ────────────────────────────────────────
+
+    function callAPI(payload) {
+      if (isLoading) return;
+      isLoading = true;
+      chatSend.disabled = true;
+      clearChips();
+      showTyping();
+
+      fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.assign({ sessionId: sessionId }, payload)),
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          hideTyping();
+
+          if (data.reply) appendBot(data.reply);
+
+          if (data.nextStep === 'limit_reached') {
+            clearChips();
+            if (chatInputArea) chatInputArea.style.display = 'none';
+            return;
+          }
+
+          if (data.followUp) {
+            // Mostra mensagem de seguimento (ex: após resposta empática da IA)
+            showTyping();
+            setTimeout(function () {
+              hideTyping();
+              if (data.followUp.message) appendBot(data.followUp.message);
+              renderChips(data.followUp.chips);
+              setInputMode(!!(data.followUp.inputDisabled));
+              if (!data.followUp.inputDisabled) chatInput.focus();
+            }, 800);
+          } else {
+            renderChips(data.chips);
+            setInputMode(!!(data.inputDisabled));
+
+            if (data.isLeadComplete) {
+              // Lead capturado — sugere agendamento
+              setTimeout(function () {
+                appendBot('Você também pode agendar agora mesmo pelo nosso calendário 📅');
+              }, 1200);
+            }
+
+            if (!data.inputDisabled) chatInput.focus();
+          }
+        })
+        .catch(function () {
+          hideTyping();
+          appendBot('Ops! Algo deu errado. Fale pelo WhatsApp 😊');
+          setInputMode(false);
+          chatInput.focus();
+        })
+        .finally(function () {
+          isLoading = false;
+          chatSend.disabled = false;
+        });
+    }
+
+    // ── Envio de mensagem de texto ───────────────────────────
+
+    function sendMessage() {
+      if (isLoading || chatInput.disabled) return;
+      var msg = chatInput.value.trim();
+      if (!msg) return;
+      chatInput.value = '';
+      appendUser(msg);
+      callAPI({ message: msg });
+    }
+
+    chatSend.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    });
+  })();
+
   /* --- Cookie consent banner --- */
   (function () {
     var COOKIE_KEY = 'pt_cookie_consent';
