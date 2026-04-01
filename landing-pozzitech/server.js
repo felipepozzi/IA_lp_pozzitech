@@ -65,4 +65,6 @@ app.locals.assetVersion = Date.now();
 // ── Start ─────────────────────────────────────────────────────
 app.listen(PORT, () => {
   console.log(`\n  ✓ PozziTech Landing rodando em http://localhost:${PORT}\n`);
+  // SECURITY: Rotate all API keys if they have ever been exposed in git or logs.
+  console.warn('  ⚠  SEGURANÇA: Confirme que SUPABASE_SERVICE_ROLE_KEY, ANTHROPIC_API_KEY e RESEND_API_KEY foram rotacionadas.');
 });

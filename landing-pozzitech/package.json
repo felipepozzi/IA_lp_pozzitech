@@ -1,6 +1,6 @@
 {
   "name": "landing-pozzitech",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Landing page PozziTech - Automação com IA",
   "main": "server.js",
   "scripts": {
@@ -17,6 +17,7 @@
     "dotenv": "^17.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "express-rate-limit": "^8.3.2",
     "helmet": "^7.1.0",
     "resend": "^6.10.0"
   },

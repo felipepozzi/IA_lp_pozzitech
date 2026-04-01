@@ -4,20 +4,24 @@ const { loadProject } = require('../lib/chatbot/project-loader');
 const { getSession, updateSession } = require('../lib/chatbot/session-store');
 const { processMessage, findStep, buildChips, presentStep } = require('../lib/chatbot/engine');
 const { getClient } = require('../lib/supabase');
-const rateLimiter = require('../lib/chatbot/rate-limiter');
 const { sendLeadSummaryEmail, sendLeadNotificationEmail } = require('../lib/email');
 
 // Slug do projeto desta landing page (configurável por env)
 const PROJECT_SLUG = process.env.CHATBOT_PROJECT_SLUG || 'pozzitech';
 
-// ── Sanitização básica de input ──────────────────────────────
+// ── Sanitização de input ─────────────────────────────────────
 
 function sanitizeInput(str) {
   if (!str || typeof str !== 'string') return '';
   return str
     .trim()
     .slice(0, 500)
-    .replace(/[<>]/g, ''); // evita injeção básica de HTML
+    // Remove todas as tags HTML e caracteres de controle de markup
+    .replace(/<[^>]*>/g, '')
+    .replace(/[<>]/g, '')
+    // Remove sequências de escape de script comuns
+    .replace(/javascript\s*:/gi, '')
+    .replace(/on\w+\s*=/gi, '');
 }
 
 function isValidSessionId(id) {
@@ -101,11 +105,6 @@ async function handleInit(req, res) {
 
   if (!isValidSessionId(sessionId)) {
     return res.status(400).json({ error: 'sessionId inválido.' });
-  }
-
-  const ip = req.ip || req.socket?.remoteAddress || 'unknown';
-  if (!rateLimiter.check(ip)) {
-    return res.status(429).json({ error: 'Muitas requisições. Aguarde alguns minutos.' });
   }
 
   try {
