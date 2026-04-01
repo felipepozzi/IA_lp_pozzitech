@@ -5,6 +5,7 @@ const { getSession, updateSession } = require('../lib/chatbot/session-store');
 const { processMessage, findStep, buildChips, presentStep } = require('../lib/chatbot/engine');
 const { getClient } = require('../lib/supabase');
 const rateLimiter = require('../lib/chatbot/rate-limiter');
+const { sendLeadSummaryEmail, sendLeadNotificationEmail } = require('../lib/email');
 
 // Slug do projeto desta landing page (configurável por env)
 const PROJECT_SLUG = process.env.CHATBOT_PROJECT_SLUG || 'pozzitech';
@@ -55,6 +56,18 @@ async function captureLead(project, sessionId, leadData, messages) {
   if (insertError) {
     console.error('[lead-capture] Supabase insert error:', insertError.message);
   }
+
+  // Envia emails (fire-and-forget)
+  const emailPayload = {
+    name: leadData.name || 'Visitante',
+    email: leadData.email,
+    phone: leadData.phone,
+    segment: leadData.segment || leadData.segmento || null,
+    challenge: leadData.challenge || leadData.desafio || null,
+  };
+
+  if (leadData.email) sendLeadSummaryEmail(emailPayload);
+  sendLeadNotificationEmail(emailPayload);
 
   // Notifica n8n (fire-and-forget — não bloqueia a resposta ao usuário)
   const webhookUrl = project.webhook_url || process.env.N8N_WEBHOOK_URL;
