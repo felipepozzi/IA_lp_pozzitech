@@ -20,7 +20,9 @@
 
   <%- include('partials/footer') %>
   <%- include('partials/whatsapp-button') %>
+  <%- include('partials/chat-widget') %>
+  <%- include('partials/cookie-consent') %>
 
-  <script src="/js/main.js" defer></script>
+  <script src="/js/main.js?v=<%= locals.assetVersion %>" defer></script>
 </body>
 </html>
