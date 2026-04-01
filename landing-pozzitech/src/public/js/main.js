@@ -210,7 +210,7 @@
       div.className = 'flex items-start gap-2';
       var safe = escapeHtml(text).replace(/\n/g, '<br>');
       div.innerHTML = BOT_AVATAR +
-        '<div class="rounded-2xl rounded-tl-none px-4 py-2.5 text-sm text-white/90 leading-relaxed" style="background:rgba(255,255,255,0.08);max-width:240px;">' + safe + '</div>';
+        '<div class="rounded-2xl rounded-tl-none px-4 py-2.5 text-sm leading-relaxed" style="background:#e8e9f0;color:#1a1a2e;max-width:240px;">' + safe + '</div>';
       chatMessages.appendChild(div);
       scrollToBottom();
     }
@@ -228,11 +228,11 @@
       div.id = 'chat-typing';
       div.className = 'flex items-start gap-2';
       div.innerHTML = BOT_AVATAR +
-        '<div class="rounded-2xl rounded-tl-none px-4 py-3" style="background:rgba(255,255,255,0.08);">' +
+        '<div class="rounded-2xl rounded-tl-none px-4 py-3" style="background:#e8e9f0;">' +
         '<div class="flex gap-1 items-center">' +
-        '<span class="w-2 h-2 rounded-full bg-white/50 animate-bounce" style="animation-delay:0ms"></span>' +
-        '<span class="w-2 h-2 rounded-full bg-white/50 animate-bounce" style="animation-delay:150ms"></span>' +
-        '<span class="w-2 h-2 rounded-full bg-white/50 animate-bounce" style="animation-delay:300ms"></span>' +
+        '<span class="w-2 h-2 rounded-full animate-bounce" style="background:#6b7280;animation-delay:0ms"></span>' +
+        '<span class="w-2 h-2 rounded-full animate-bounce" style="background:#6b7280;animation-delay:150ms"></span>' +
+        '<span class="w-2 h-2 rounded-full animate-bounce" style="background:#6b7280;animation-delay:300ms"></span>' +
         '</div></div>';
       chatMessages.appendChild(div);
       scrollToBottom();
