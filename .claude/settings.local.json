@@ -2,15 +2,25 @@
   "permissions": {
     "allow": [
       "Bash(mkdir -p \"D:/workspace/IA_lp_pozzitech/landing-pozzitech/src/routes\" && mkdir -p \"D:/workspace/IA_lp_pozzitech/landing-pozzitech/src/controllers\" && mkdir -p \"D:/workspace/IA_lp_pozzitech/landing-pozzitech/src/views/partials\" && mkdir -p \"D:/workspace/IA_lp_pozzitech/landing-pozzitech/src/public/css\" && mkdir -p \"D:/workspace/IA_lp_pozzitech/landing-pozzitech/src/public/js\" && echo \"Dirs criados\")",
-      "Bash(git fetch:*)",
-      "Bash(git merge:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(docker build:*)",
-      "Bash(docker stop:*)",
-      "Bash(docker rm:*)",
-      "Bash(docker run:*)",
-      "Bash(docker ps:*)",
-      "Bash(xargs -I{} sh -c 'git show {}:landing-pozzitech/.env 2>/dev/null && echo \"FOUND IN: {}\"')"
+      "Bash(node --check server.js)",
+      "Bash(node --check src/lib/supabase.js)",
+      "Bash(node --check src/lib/chatbot/engine.js)",
+      "Bash(node --check src/lib/chatbot/validators.js)",
+      "Bash(node --check src/lib/chatbot/rate-limiter.js)",
+      "Bash(docker exec:*)",
+      "Bash(python3 -c \"import sys,json; c=json.load\\(sys.stdin\\); env=[e for e in c[0][''''Config''''][''''Env''''] if ''''ANON'''' in e or ''''SERVICE'''' in e or ''''JWT'''' in e]; print\\(''''\\\\n''''.join\\(env\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; c=json.load\\(sys.stdin\\); env=[e for e in c[0][''''Config''''][''''Env''''] if any\\(k in e for k in [''''ANON'''',''''SERVICE'''',''''JWT_SECRET'''',''''GOTRUE_JWT'''']\\)]; print\\(''''\\\\n''''.join\\(env[:10]\\)\\)\")",
+      "Bash(node -e \":*)",
+      "Bash(SUPABASE_URL=http://127.0.0.1:54331 SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU node -e \":*)",
+      "Bash(npm install:*)",
+      "Bash(node:*)",
+      "Bash(curl -s \"http://localhost:2999/js/main.js\")",
+      "Bash(npm audit:*)",
+      "Bash(git merge:*)"
     ]
   }
 }
