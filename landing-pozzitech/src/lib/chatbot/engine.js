@@ -38,7 +38,9 @@ async function callAI(systemPrompt, messageHistory, userMessage) {
     .slice(-10)
     .map(m => ({ role: m.role, content: String(m.content).slice(0, 1000) }));
 
-  history.push({ role: 'user', content: userMessage });
+  //history.push({ role: 'user', content: userMessage });
+  history.push({ role: 'user', content: `<user_input>\n${userMessage}\n</user_input>` });
+
 
   const response = await getAnthropic().messages.create({
     model: process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001',

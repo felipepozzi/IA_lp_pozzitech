@@ -3,7 +3,7 @@ const homeController = {
     res.render('index', {
       meta: {
         title: 'PozziTech | Automação com IA para Empresas — Diagnóstico Gratuito',
-        description: 'Transforme processos manuais em máquinas de eficiência com IA. Consultoria especializada em automação, atendimento com IA e CRM. Agende sua demonstração gratuita.',
+        description: 'Transforme processos manuais em máquinas de eficiência com IA. Consultoria especializada em automação, atendimento com IA e CRM. Agende seu diagnóstico gratuito.',
         url: 'https://pozzitech.com.br',
         image: 'https://pozzitech.com.br/og-image.jpg',
         keywords: 'automação com IA, consultoria automação, chatbot, CRM automatizado, diagnóstico estratégico, redução de custos, inteligência artificial empresas',
