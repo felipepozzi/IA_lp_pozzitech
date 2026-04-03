@@ -136,12 +136,6 @@ async function handleInit(req, res) {
 // Processa mensagem do usuário e retorna resposta do funil/IA
 
 async function handleMessage(req, res) {
-  const ip = req.ip || req.socket?.remoteAddress || 'unknown';
-
-  if (!rateLimiter.check(ip)) {
-    return res.status(429).json({ reply: 'Muitas mensagens. Aguarde alguns minutos.' });
-  }
-
   const { sessionId, message, selectedChip } = req.body || {};
 
   if (!isValidSessionId(sessionId)) {
