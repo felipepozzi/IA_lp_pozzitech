@@ -396,13 +396,6 @@
             renderChips(data.chips);
             setInputMode(!!(data.inputDisabled));
 
-            if (data.isLeadComplete) {
-              // Lead capturado — sugere agendamento
-              setTimeout(function () {
-                appendBot('Tem alguma dúvida enquanto isso? Fique à vontade para perguntar! 😊');
-              }, 1200);
-            }
-
             if (!data.inputDisabled) chatInput.focus();
           }
         })
