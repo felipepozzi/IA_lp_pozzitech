@@ -399,7 +399,7 @@
             if (data.isLeadComplete) {
               // Lead capturado — sugere agendamento
               setTimeout(function () {
-                appendBot('Você também pode agendar agora mesmo pelo nosso calendário 📅');
+                appendBot('"Perfeito! Você pode agendar aqui 📅 ou eu entro em contato em breve.\n\nFicou com alguma dúvida? Estou por aqui! 🚀"');
               }, 1200);
             }
 
