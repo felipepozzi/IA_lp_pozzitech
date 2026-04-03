@@ -1,17 +1,24 @@
 'use strict';
 
-const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
 
-let resend;
-function getResend() {
-  if (!resend) {
-    if (!process.env.RESEND_API_KEY) throw new Error('RESEND_API_KEY não configurada');
-    resend = new Resend(process.env.RESEND_API_KEY);
+let transporter;
+function getTransporter() {
+  if (!transporter) {
+    transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.hostinger.com',
+      port: parseInt(process.env.SMTP_PORT || '465'),
+      secure: (process.env.SMTP_PORT || '465') === '465',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
   }
-  return resend;
+  return transporter;
 }
 
-const FROM = process.env.RESEND_FROM || 'PozziTech <noreply@pozzitech.com.br>';
+const FROM = process.env.SMTP_FROM || `PozziTech <${process.env.SMTP_USER}>`;
 
 // ── Template HTML ─────────────────────────────────────────────
 
@@ -114,18 +121,13 @@ async function sendLeadSummaryEmail({ name, email, segment, challenge }) {
   ];
 
   try {
-    const { error } = await getResend().emails.send({
+    await getTransporter().sendMail({
       from: FROM,
       to: email,
       subject: `${name}, aqui está o resumo da sua conversa com a PozziTech 🚀`,
       html: buildLeadEmailHtml({ name, segment, challenge, nextSteps }),
     });
-
-    if (error) {
-      console.error('[email] Resend error:', error.message);
-    } else {
-      console.log(`[email] Resumo enviado para ${email}`);
-    }
+    console.log(`[email] Resumo enviado para ${email}`);
   } catch (err) {
     console.error('[email] Falha ao enviar:', err.message);
   }
@@ -134,7 +136,7 @@ async function sendLeadSummaryEmail({ name, email, segment, challenge }) {
 // ── Envia notificação de novo lead para o dono ────────────────
 
 async function sendLeadNotificationEmail({ name, email, phone, segment, challenge }) {
-  const notifyTo = process.env.RESEND_NOTIFY_EMAIL;
+  const notifyTo = process.env.SMTP_NOTIFY_EMAIL;
   if (!notifyTo) return;
 
   const html = `<!DOCTYPE html>
@@ -184,18 +186,13 @@ async function sendLeadNotificationEmail({ name, email, phone, segment, challeng
 </html>`;
 
   try {
-    const { error } = await getResend().emails.send({
+    await getTransporter().sendMail({
       from: FROM,
       to: notifyTo,
       subject: `🔔 Novo lead: ${name}${phone ? ` — ${phone}` : ''}`,
       html,
     });
-
-    if (error) {
-      console.error('[email] Notificação error:', error.message);
-    } else {
-      console.log(`[email] Notificação enviada para ${notifyTo}`);
-    }
+    console.log(`[email] Notificação enviada para ${notifyTo}`);
   } catch (err) {
     console.error('[email] Falha ao notificar:', err.message);
   }
