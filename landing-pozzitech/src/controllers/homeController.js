@@ -1,20 +1,24 @@
+const sharedLocals = {
+  meta: {
+    title: 'PozziTech | Automação com IA para Empresas — Diagnóstico Gratuito',
+    description: 'Transforme processos manuais em máquinas de eficiência com IA. Consultoria especializada em automação, atendimento com IA e CRM. Agende seu diagnóstico gratuito.',
+    url: 'https://pozzitech.com.br',
+    image: 'https://pozzitech.com.br/og-image.jpg',
+    keywords: 'automação com IA, consultoria automação, chatbot, CRM automatizado, diagnóstico estratégico, redução de custos, inteligência artificial empresas',
+  },
+  whatsapp: {
+    number: '5511989040585',
+    message: 'Olá! Gostaria de agendar um diagnóstico gratuito de Automação com IA.',
+  },
+  calendly: {
+    url: 'https://calendly.com/felipepozzi/30min',
+  },
+};
+
 const homeController = {
   index(req, res) {
     res.render('index', {
-      meta: {
-        title: 'PozziTech | Automação com IA para Empresas — Diagnóstico Gratuito',
-        description: 'Transforme processos manuais em máquinas de eficiência com IA. Consultoria especializada em automação, atendimento com IA e CRM. Agende seu diagnóstico gratuito.',
-        url: 'https://pozzitech.com.br',
-        image: 'https://pozzitech.com.br/og-image.jpg',
-        keywords: 'automação com IA, consultoria automação, chatbot, CRM automatizado, diagnóstico estratégico, redução de custos, inteligência artificial empresas',
-      },
-      whatsapp: {
-        number: '5511989040585',
-        message: 'Olá! Gostaria de agendar um diagnóstico gratuito de Automação com IA.',
-      },
-      calendly: {
-        url: 'https://calendly.com/felipepozzi/30min',
-      },
+      ...sharedLocals,
       testimonials: [],
       faqs: [
         {
@@ -42,6 +46,28 @@ const homeController = {
           a: 'Sim. O diagnóstico é 100% gratuito e sem compromisso. Se ao final da sessão você sentir que não recebeu nenhum insight útil para o seu negócio, não pedimos nada em troca — nem uma segunda conversa.',
         },
       ],
+    });
+  },
+
+  privacy(req, res) {
+    res.render('privacy', {
+      ...sharedLocals,
+      meta: {
+        ...sharedLocals.meta,
+        title: 'Política de Privacidade | PozziTech',
+        description: 'Saiba como a PozziTech coleta, utiliza e protege seus dados pessoais, em conformidade com a LGPD.',
+      },
+    });
+  },
+
+  terms(req, res) {
+    res.render('terms', {
+      ...sharedLocals,
+      meta: {
+        ...sharedLocals.meta,
+        title: 'Termos de Uso | PozziTech',
+        description: 'Termos e condições de uso do site PozziTech. Leia antes de utilizar nossos serviços.',
+      },
     });
   },
 };

@@ -449,6 +449,37 @@
       banner.style.display = 'none';
     }
 
+    // ── Meta Pixel (só carrega com consentimento) ──────────
+    function loadMetaPixel() {
+      if (window.fbq) return; // já carregado
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){
+      n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window,document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1991499815072883');
+      fbq('track', 'PageView');
+    }
+
+    function revokeMetaPixel() {
+      // Remove cookies do Meta Pixel
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var name = cookies[i].split('=')[0].trim();
+        if (name.indexOf('_fb') === 0 || name.indexOf('_fbc') === 0 || name.indexOf('_fbp') === 0) {
+          document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=' + location.hostname;
+          document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+        }
+      }
+    }
+
+    // Carrega Pixel se já consentiu antes
+    if (getConsent() === 'accepted') {
+      loadMetaPixel();
+    }
+
     // Show banner if no decision stored yet
     if (!getConsent()) {
       banner.style.display = 'block';
@@ -458,6 +489,7 @@
       btnAccept.addEventListener('click', function () {
         setConsent('accepted');
         hideBanner();
+        loadMetaPixel();
       });
     }
 
@@ -465,6 +497,7 @@
       btnReject.addEventListener('click', function () {
         setConsent('rejected');
         hideBanner();
+        revokeMetaPixel();
       });
     }
   })();
