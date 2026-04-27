@@ -1,0 +1,12 @@
+services:
+  landing:
+    container_name: pozzitech_latest
+    image: pozzitech-lp
+    build:
+      context: ./landing-pozzitech
+      dockerfile: Dockerfile
+    ports:
+      - "2999:2999"
+    env_file:
+      - .env
+    restart: unless-stopped
