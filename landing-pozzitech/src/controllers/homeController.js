@@ -2,8 +2,8 @@ const sharedLocals = {
   meta: {
     title: 'PozziTech | Automação com IA para Empresas — Diagnóstico Gratuito',
     description: 'Transforme processos manuais em máquinas de eficiência com IA. Consultoria especializada em automação, atendimento com IA e CRM. Agende seu diagnóstico gratuito.',
-    url: 'https://pozzitech.com.br',
-    image: 'https://pozzitech.com.br/og-image.jpg',
+    url: 'https://pozzitech.ia.br',
+    image: 'https://pozzitech.ia.br/og-image.jpg',
     keywords: 'automação com IA, consultoria automação, chatbot, CRM automatizado, diagnóstico estratégico, redução de custos, inteligência artificial empresas',
   },
   whatsapp: {
