@@ -43,7 +43,7 @@ const homeController = {
         },
         {
           q: 'O Diagnóstico tem alguma garantia?',
-          a: 'Sim. O diagnóstico é 100% gratuito e sem compromisso. Se ao final da sessão você sentir que não recebeu nenhum insight útil para o seu negócio, não pedimos nada em troca — nem uma segunda conversa.',
+          a: 'Sim. O diagnóstico é 100% gratuito e sem compromisso. Se ao final da sessão você sentir que não agregou valor, não pedimos nada em troca. Zero pressão.',
         },
       ],
     });
