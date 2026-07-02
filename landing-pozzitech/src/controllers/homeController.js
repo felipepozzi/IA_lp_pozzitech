@@ -17,7 +17,7 @@ const sharedLocals = {
     keywords: 'automação com IA, consultoria automação, chatbot, CRM automatizado, diagnóstico estratégico, redução de custos, inteligência artificial empresas',
   },
   whatsapp: {
-    number: '5511989040585',
+    number: '5511912840493',
     message: 'Olá! Gostaria de agendar um diagnóstico gratuito de Automação com IA.',
   },
   calendly: {
