@@ -20,7 +20,17 @@
       "Bash(node:*)",
       "Bash(curl -s \"http://localhost:2999/js/main.js\")",
       "Bash(npm audit:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(PORT=3199 timeout 12 node server.js)",
+      "Bash(curl -s http://localhost:3199/ -o /tmp/home.html -w \"%{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:3199/geo -o /tmp/geo.html -w \"%{http_code}\\\\n\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3199/privacidade)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3199/termos)",
+      "Bash(curl -s http://localhost:3199/llms.txt)",
+      "Read(//private/tmp/**)",
+      "Bash(python3 -c ' *)",
+      "Bash(grep -o 'R\\\\$[^<]\\\\{0,20\\\\}' /tmp/home.html)",
+      "Bash(grep -o 'R\\\\$[^<]\\\\{0,20\\\\}' /tmp/geo.html)"
     ]
   }
 }
