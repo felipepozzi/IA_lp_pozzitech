@@ -42,7 +42,7 @@ Restrições importantes:
   'Olá! 👋 Sou o assistente da PozziTech. Vou te ajudar a descobrir como a automação com IA pode transformar o seu negócio.',
 
   -- Domínios permitidos
-  ARRAY['pozzitech.com.br', 'www.pozzitech.com.br', 'localhost'],
+  ARRAY['pozzitech.ia.br', 'www.pozzitech.ia.br', 'localhost'],
 
   -- Configuração do funil
   '{

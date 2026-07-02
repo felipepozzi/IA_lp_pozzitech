@@ -11,6 +11,10 @@
   body {
     @apply font-sans antialiased;
   }
+  /* Compensa o header fixo ao navegar direto para /#ancora */
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
 }
 
 @layer components {

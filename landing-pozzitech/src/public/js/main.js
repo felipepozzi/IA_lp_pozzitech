@@ -1,5 +1,5 @@
 /* ============================================================
-   PozziTech — Main JS
+   Pozzitech — Main JS
    Animations, interactions, header scroll
    ============================================================ */
 
@@ -45,10 +45,12 @@
     });
   }
 
-  /* --- Smooth scroll for anchor links --- */
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  /* --- Smooth scroll for anchor links (inclui /#ancora quando já estamos na home) --- */
+  document.querySelectorAll('a[href^="#"], a[href^="/#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-      const target = document.querySelector(this.getAttribute('href'));
+      const href = this.getAttribute('href');
+      if (href.startsWith('/#') && window.location.pathname !== '/') return;
+      const target = document.querySelector(href.replace(/^\//, ''));
       if (!target) return;
       e.preventDefault();
       const offset = 80;

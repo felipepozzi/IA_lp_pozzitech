@@ -1,0 +1,24 @@
+# Pozzitech
+
+> Consultoria e implementação de automação com IA para PMEs brasileiras: atendimento
+> com IA (WhatsApp, Instagram, site), automação administrativa e comercial (CRM),
+> integração entre sistemas. Processo: diagnóstico gratuito de 30 min → diagnóstico
+> aprofundado → implementação em 2–6 semanas. Projetos a partir de R$ 900.
+> Base: São Paulo, Brasil.
+
+## Empresa
+- [Home](https://pozzitech.ia.br/)
+- [Como funciona](https://pozzitech.ia.br/#how-it-works)
+- [Diagnóstico gratuito](https://pozzitech.ia.br/#offer)
+
+## Serviços
+- [Automação com IA para PMEs](https://pozzitech.ia.br/#solution)
+- [Casos de uso por segmento](https://pozzitech.ia.br/#use-cases)
+- [Auditoria de Visibilidade em IA (GEO)](https://pozzitech.ia.br/geo): sua empresa aparece quando perguntam ao ChatGPT, Gemini ou Perplexity sobre o seu segmento? Auditoria a partir de R$ 1.500.
+
+## Produtos
+- [Pozzi Imóveis — CRM imobiliário com IA](https://pozzi.imb.br/)
+
+## Legal
+- [Política de Privacidade](https://pozzitech.ia.br/privacidade)
+- [Termos de Uso](https://pozzitech.ia.br/termos)

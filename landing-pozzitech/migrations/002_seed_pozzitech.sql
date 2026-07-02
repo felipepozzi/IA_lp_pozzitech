@@ -42,7 +42,7 @@ Restrições importantes:
   'Olá! 👋 Sou o assistente da PozziTech. Vou te ajudar a descobrir como a automação com IA pode transformar o seu negócio.',
 
   -- Domínios permitidos
-  ARRAY['pozzitech.com.br', 'www.pozzitech.com.br', 'localhost'],
+  ARRAY['pozzitech.ia.br', 'www.pozzitech.ia.br', 'localhost'],
 
   -- Configuração do funil
   '{
@@ -126,14 +126,14 @@ Restrições importantes:
   }'::jsonb,
 
   -- Email de notificação (substitua pelo seu)
-  'felipe@pozzitech.com.br',
+  'felipe@pozzitech.ia.br',
 
   -- Webhook n8n pós-captura (substitua pela URL real)
   'http://localhost:5678/webhook/lead-captured',
 
   -- Resend
   'PozziTech',
-  'assistente@pozzitech.com.br',
+  'assistente@pozzitech.ia.br',
 
   true,
   10

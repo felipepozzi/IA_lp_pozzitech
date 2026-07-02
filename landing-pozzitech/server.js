@@ -56,7 +56,7 @@ app.use('/', routes);
 
 // ── 404 ──────────────────────────────────────────────────────
 app.use((req, res) => {
-  res.status(404).redirect('/');
+  res.status(404).render('404');
 });
 
 // ── Versão de assets (cache-busting) ─────────────────────────
@@ -65,7 +65,7 @@ app.locals.assetVersion = Date.now();
 
 // ── Start ─────────────────────────────────────────────────────
 app.listen(PORT, () => {
-  console.log(`\n  ✓ PozziTech Landing rodando em http://localhost:${PORT}\n`);
+  console.log(`\n  ✓ Pozzitech Landing rodando em http://localhost:${PORT}\n`);
   // SECURITY: Rotate all API keys if they have ever been exposed in git or logs.
   console.warn('  ⚠  SEGURANÇA: Confirme que SUPABASE_SERVICE_ROLE_KEY, ANTHROPIC_API_KEY e RESEND_API_KEY foram rotacionadas.');
 });

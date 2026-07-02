@@ -7,7 +7,7 @@
   <title><%= meta.title %></title>
   <meta name="description" content="<%= meta.description %>" />
   <meta name="keywords" content="<%= meta.keywords %>" />
-  <meta name="author" content="PozziTech" />
+  <meta name="author" content="Pozzitech" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="<%= meta.url %>" />
 
@@ -20,7 +20,7 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="pt_BR" />
-  <meta property="og:site_name" content="PozziTech" />
+  <meta property="og:site_name" content="Pozzitech" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -41,47 +41,10 @@
   <!-- Main CSS -->
   <link rel="stylesheet" href="/css/style.css" />
 
-  <!-- Schema Markup: Organization -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "PozziTech",
-    "url": "<%= meta.url %>",
-    "description": "<%= meta.description %>",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "customer service",
-      "availableLanguage": "Portuguese"
-    },
-    "offers": {
-      "@type": "Offer",
-      "name": "Diagnóstico Gratuito de Automação com IA",
-      "price": "0",
-      "priceCurrency": "BRL",
-      "description": "Sessão gratuita de 30 minutos para mapear oportunidades de automação com IA na sua empresa."
-    }
-  }
-  </script>
-
-  <!-- Schema Markup: Service -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Diagnóstico Gratuito de Automação com IA",
-    "provider": {
-      "@type": "Organization",
-      "name": "PozziTech"
-    },
-    "description": "Sessão gratuita de 30 minutos onde mapeamos seus processos, identificamos gargalos e apresentamos as principais oportunidades de automação com IA.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "BRL"
-    }
-  }
-  </script>
+  <!-- Dados estruturados (schema.org) — definidos por página em lib/seo.js -->
+  <% (locals.schemas || []).forEach((schema) => { %>
+  <script type="application/ld+json"><%- JSON.stringify(schema).replace(/</g, '\\u003c') %></script>
+  <% }) %>
   <!-- Meta Pixel noscript fallback (imagem 1x1 para navegadores sem JS) -->
   <noscript>
     <img height="1" width="1" style="display:none"

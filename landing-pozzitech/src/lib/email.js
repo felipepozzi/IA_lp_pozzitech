@@ -18,7 +18,7 @@ function getTransporter() {
   return transporter;
 }
 
-const FROM = process.env.SMTP_FROM || `PozziTech <${process.env.SMTP_USER}>`;
+const FROM = process.env.SMTP_FROM || `Pozzitech <${process.env.SMTP_USER}>`;
 
 // ── Template HTML ─────────────────────────────────────────────
 
@@ -28,7 +28,7 @@ function buildLeadEmailHtml({ name, segment, challenge, nextSteps }) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Seu resumo — PozziTech</title>
+  <title>Seu resumo — Pozzitech</title>
 </head>
 <body style="margin:0;padding:0;background:#f4f4f5;font-family:'Inter',Arial,sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 0;">
@@ -39,7 +39,7 @@ function buildLeadEmailHtml({ name, segment, challenge, nextSteps }) {
           <!-- Header -->
           <tr>
             <td style="background:linear-gradient(135deg,#4F46E5,#7C3AED);padding:40px 48px;">
-              <p style="margin:0;font-size:22px;font-weight:700;color:#ffffff;">PozziTech</p>
+              <p style="margin:0;font-size:22px;font-weight:700;color:#ffffff;">Pozzitech</p>
               <p style="margin:6px 0 0;font-size:14px;color:#c7d2fe;">Automação com IA para PMEs</p>
             </td>
           </tr>
@@ -95,7 +95,7 @@ function buildLeadEmailHtml({ name, segment, challenge, nextSteps }) {
           <tr>
             <td style="background:#f9fafb;padding:24px 48px;border-top:1px solid #e5e7eb;">
               <p style="margin:0;font-size:12px;color:#9ca3af;text-align:center;">
-                PozziTech — Automação com IA para PMEs<br/>
+                Pozzitech — Automação com IA para PMEs<br/>
                 Você recebeu este email por ter conversado com nosso assistente virtual.
               </p>
             </td>
@@ -124,7 +124,7 @@ async function sendLeadSummaryEmail({ name, email, segment, challenge }) {
     await getTransporter().sendMail({
       from: FROM,
       to: email,
-      subject: `${name}, aqui está o resumo da sua conversa com a PozziTech 🚀`,
+      subject: `${name}, aqui está o resumo da sua conversa com a Pozzitech 🚀`,
       html: buildLeadEmailHtml({ name, segment, challenge, nextSteps }),
     });
     console.log(`[email] Resumo enviado para ${email}`);
@@ -141,7 +141,7 @@ async function sendLeadNotificationEmail({ name, email, phone, segment, challeng
 
   const html = `<!DOCTYPE html>
 <html lang="pt-BR">
-<head><meta charset="UTF-8" /><title>Novo Lead — PozziTech</title></head>
+<head><meta charset="UTF-8" /><title>Novo Lead — Pozzitech</title></head>
 <body style="margin:0;padding:0;background:#f4f4f5;font-family:'Inter',Arial,sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 0;">
     <tr>
@@ -175,7 +175,7 @@ async function sendLeadNotificationEmail({ name, email, phone, segment, challeng
           </tr>
           <tr>
             <td style="background:#f9fafb;padding:16px 40px;border-top:1px solid #e5e7eb;">
-              <p style="margin:0;font-size:12px;color:#9ca3af;">Notificação automática — PozziTech Chatbot</p>
+              <p style="margin:0;font-size:12px;color:#9ca3af;">Notificação automática — Pozzitech Chatbot</p>
             </td>
           </tr>
         </table>
