@@ -31,7 +31,11 @@
       "Bash(python3 -c ' *)",
       "Bash(grep -o 'R\\\\$[^<]\\\\{0,20\\\\}' /tmp/home.html)",
       "Bash(grep -o 'R\\\\$[^<]\\\\{0,20\\\\}' /tmp/geo.html)",
-      "Bash(git remote *)"
+      "Bash(git remote *)",
+      "Read(//var/www/advisors/**)",
+      "Read(//etc/**)",
+      "Bash(grep -v \"^$\")",
+      "Bash(curl *)"
     ]
   }
 }
