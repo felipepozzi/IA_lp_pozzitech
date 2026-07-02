@@ -17,8 +17,10 @@ const sharedLocals = {
     keywords: 'automação com IA, consultoria automação, chatbot, CRM automatizado, diagnóstico estratégico, redução de custos, inteligência artificial empresas',
   },
   whatsapp: {
-    number: '5511912840493',
-    message: 'Olá! Gostaria de agendar um diagnóstico gratuito de Automação com IA.',
+    // 5511912840493 = WABA com chatbot recepcionista (roda no Pozzi Imob). Não trocar.
+    // A mensagem PRECISA conter a palavra "Pozzitech" — é o marcador de origem do lead.
+    number: process.env.WHATSAPP_NUMBER || '5511912840493',
+    message: process.env.WHATSAPP_MESSAGE || 'Olá! Vim pela Pozzitech e gostaria de um diagnóstico gratuito de Automação com IA.',
   },
   calendly: {
     url: 'https://calendly.com/felipepozzi/30min',
@@ -51,7 +53,8 @@ const homeController = {
       },
       whatsapp: {
         ...sharedLocals.whatsapp,
-        message: 'Olá! Quero saber se minha empresa aparece nas respostas de IA (Auditoria GEO).',
+        // Mantém o marcador de origem "Pozzitech" (ver comentário em sharedLocals)
+        message: 'Olá! Vim pela Pozzitech e quero saber se minha empresa aparece nas respostas de IA (Auditoria GEO).',
       },
       faqs: faqGeo,
       schemas: [organizationSchema, geoServiceSchema, faqSchema(faqGeo)],

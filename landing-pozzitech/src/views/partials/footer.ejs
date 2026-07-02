@@ -13,7 +13,7 @@
           Transformando processos manuais em máquinas de eficiência com IA. Consultoria especializada para PMEs que querem crescer sem aumentar custos.
         </p>
         <div class="flex gap-3">
-          <a href="https://wa.me/<%= whatsapp.number %>" target="_blank" rel="noopener"
+          <a href="https://wa.me/<%= whatsapp.number %>?text=<%= encodeURIComponent(whatsapp.message) %>" target="_blank" rel="noopener"
              class="w-9 h-9 rounded-lg flex items-center justify-center text-white/50 hover:text-white transition-colors"
              style="background:rgba(255,255,255,0.05);"
              aria-label="WhatsApp">
