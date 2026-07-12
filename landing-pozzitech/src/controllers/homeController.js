@@ -8,6 +8,16 @@ const {
 } = require('../lib/seo');
 const { faqCategoria, faqLgpdSeguranca, faqOperacional, faqGeo } = require('../lib/faq-data');
 
+// lastmod real por rota do sitemap. NÃO usar uma data global: lastmod inflado
+// em todas as URLs faz o crawler perder confiança no sinal. Atualizar MANUALMENTE
+// só a data da rota cujo conteúdo mudou (ex.: mexeu no /geo → bumpa '/geo').
+const PAGE_UPDATED = {
+  '/': '2026-07-02',
+  '/geo': '2026-07-02',
+  '/privacidade': '2026-07-02',
+  '/termos': '2026-07-02',
+};
+
 const sharedLocals = {
   meta: {
     title: 'Pozzitech | Automação com IA para Empresas — Diagnóstico Gratuito',
@@ -89,17 +99,17 @@ const homeController = {
 
   sitemap(req, res) {
     const pages = [
-      { loc: `${BASE}/`, priority: '1.0' },
-      { loc: `${BASE}/geo`, priority: '0.9' },
-      { loc: `${BASE}/privacidade`, priority: '0.3' },
-      { loc: `${BASE}/termos`, priority: '0.3' },
+      { loc: `${BASE}/`, path: '/', priority: '1.0' },
+      { loc: `${BASE}/geo`, path: '/geo', priority: '0.9' },
+      { loc: `${BASE}/privacidade`, path: '/privacidade', priority: '0.3' },
+      { loc: `${BASE}/termos`, path: '/termos', priority: '0.3' },
     ];
     const xml = [
       '<?xml version="1.0" encoding="UTF-8"?>',
       '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
       ...pages.map(
         (p) =>
-          `  <url><loc>${p.loc}</loc><lastmod>${CONTENT_UPDATED}</lastmod><priority>${p.priority}</priority></url>`
+          `  <url><loc>${p.loc}</loc><lastmod>${PAGE_UPDATED[p.path] || CONTENT_UPDATED}</lastmod><priority>${p.priority}</priority></url>`
       ),
       '</urlset>',
     ].join('\n');

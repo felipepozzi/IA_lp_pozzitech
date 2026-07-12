@@ -26,4 +26,8 @@ echo "✅ Status dos containers:"
 docker compose ps
 
 echo "---"
+echo "📣 IndexNow (Bing) — notificando URLs do sitemap (best-effort)..."
+bash "$PROJECT_DIR/scripts/indexnow-ping.sh" || true
+
+echo "---"
 echo "✅ Deploy concluído: $PROJECT_NAME"
