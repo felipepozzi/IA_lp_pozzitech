@@ -45,6 +45,11 @@
   <% (locals.schemas || []).forEach((schema) => { %>
   <script type="application/ld+json"><%- JSON.stringify(schema).replace(/</g, '\\u003c') %></script>
   <% }) %>
+  <!-- GA4: ID exposto pro main.js, que só carrega o gtag após consentimento (LGPD) -->
+  <% if (locals.ga4Id) { %>
+  <meta name="ga4-id" content="<%= ga4Id %>" />
+  <% } %>
+
   <!-- Meta Pixel noscript fallback (imagem 1x1 para navegadores sem JS) -->
   <noscript>
     <img height="1" width="1" style="display:none"

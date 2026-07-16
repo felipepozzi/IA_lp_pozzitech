@@ -22,12 +22,20 @@ app.use(helmet({
         "'unsafe-inline'",
         "https://assets.calendly.com",
         "https://connect.facebook.net",
+        "https://www.googletagmanager.com",
       ],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "https:", "https://www.facebook.com"],
       frameSrc: ["https://calendly.com", "https://www.facebook.com"],
-      connectSrc: ["'self'", "https://www.facebook.com", "https://connect.facebook.net"],
+      connectSrc: [
+        "'self'",
+        "https://www.facebook.com",
+        "https://connect.facebook.net",
+        "https://*.google-analytics.com",
+        "https://*.analytics.google.com",
+        "https://www.googletagmanager.com",
+      ],
     },
   },
 }));
@@ -62,6 +70,9 @@ app.use((req, res) => {
 // ── Versão de assets (cache-busting) ─────────────────────────
 // Calculada uma vez na inicialização: muda a cada restart/deploy
 app.locals.assetVersion = Date.now();
+
+// ── Google Analytics 4 (opcional — só ativa se o ID estiver no .env) ──
+app.locals.ga4Id = process.env.GA4_MEASUREMENT_ID || '';
 
 // ── Start ─────────────────────────────────────────────────────
 app.listen(PORT, () => {

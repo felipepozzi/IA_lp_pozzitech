@@ -477,9 +477,38 @@
       }
     }
 
-    // Carrega Pixel se já consentiu antes
+    // ── Google Analytics 4 (só carrega com consentimento) ──
+    var ga4Meta = document.querySelector('meta[name="ga4-id"]');
+    var GA4_ID = ga4Meta ? ga4Meta.getAttribute('content') : '';
+
+    function loadGA4() {
+      if (!GA4_ID || window.gtag) return; // sem ID configurado ou já carregado
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', GA4_ID);
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
+      document.head.appendChild(s);
+    }
+
+    function revokeGA4() {
+      // Remove cookies do GA4
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+        var name = cookies[i].split('=')[0].trim();
+        if (name.indexOf('_ga') === 0) {
+          document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=' + location.hostname;
+          document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+        }
+      }
+    }
+
+    // Carrega Pixel e GA4 se já consentiu antes
     if (getConsent() === 'accepted') {
       loadMetaPixel();
+      loadGA4();
     }
 
     // Show banner if no decision stored yet
@@ -492,6 +521,7 @@
         setConsent('accepted');
         hideBanner();
         loadMetaPixel();
+        loadGA4();
       });
     }
 
@@ -500,6 +530,7 @@
         setConsent('rejected');
         hideBanner();
         revokeMetaPixel();
+        revokeGA4();
       });
     }
   })();
